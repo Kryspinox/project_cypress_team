@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Kryspinox/project_cypress_team#readme",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "cypress": "^13.10.0"
   }
 }
