@@ -17,7 +17,7 @@
     "url": "https://github.com/Kryspinox/project_cypress_team/issues"
   },
   "homepage": "https://github.com/Kryspinox/project_cypress_team#readme",
-  "devDependencies": {
+  "dependencies": {
     "cypress": "^13.10.0"
   }
 }
