@@ -1,0 +1,23 @@
+{
+  "name": "project_cypress_team",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kryspinox/project_cypress_team.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kryspinox/project_cypress_team/issues"
+  },
+  "homepage": "https://github.com/Kryspinox/project_cypress_team#readme",
+  "devDependencies": {
+    "cypress": "^13.10.0"
+  }
+}
