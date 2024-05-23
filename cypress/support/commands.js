@@ -24,8 +24,23 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('findByPlaceholder', (placeholder, tag = 'input') => {
-    cy.get(`${tag}[placeholder="${placeholder}"]`);
-  });
+import { faker } from "@faker-js/faker";
+import { generateUser } from "./generate";
 
+Cypress.Commands.add('findeByPlaceholder', (placeholder) => {
+    cy.get(`[placeholder="${placeholder}"]`)
+  });
   
+Cypress.Commands.add('registerNewUser', () => {
+    
+ const user = generateUser();
+
+cy.request('POST', 'https://conduit.mate.academy/api/users', {
+"user": {
+"username": user.randomUsername,
+"email": user.randomEmail,
+"password": user.password
+}
+});
+return cy.wrap(user);
+});
