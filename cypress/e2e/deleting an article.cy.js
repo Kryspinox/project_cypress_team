@@ -2,7 +2,7 @@
 
 const { UserInfo } = require('../support/userInfo.cy.js');
 
-const {userName, userPassword, userEmail, articleBody, articleDescription, articleTitle, articleTags, newArticleTitle} = UserInfo();
+const {userPassword, userEmail, articleBody, articleDescription, articleTitle, articleTags} = UserInfo();
 
 before (() => {
 
@@ -33,27 +33,9 @@ before (() => {
     .click();
 });
 
-it('Editing an article', () => {
-    // Article edit //
-  cy.contains('Edit Article')
+it('Delete an article', () => {
+  cy.contains('Delete Article')
     .click();
-
-  cy.findeByPlaceholder('Article Title')
-    .clear().type(newArticleTitle);
-
-  cy.contains('Update Article')
-    .click();
-
-    // Article check //
-  cy.visit(`https://conduit.mate.academy/profile/${userName}`);
-
-  cy.contains(newArticleTitle)
-    .click();
-
   cy.assertPagesURL('/article/');
-  
-  cy.contains(newArticleTitle);
-  cy.contains(articleDescription);
-  cy.contains(articleBody);
+  cy.contains('No articles are here... yet.')
 });
-

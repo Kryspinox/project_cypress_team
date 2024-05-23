@@ -4,13 +4,19 @@ const { UserInfo } = require('../support/userInfo.cy.js');
 
 const {userPassword, userEmail, articleBody, articleDescription, articleTitle, articleTags} = UserInfo();
 
-it('should log in and create a new article', () => {
+before(() => {
   cy.visit('https://conduit.mate.academy/user/login');
+    //  Log in //
+  cy.findByType('email')
+    .type(userEmail);
+  cy.findByType('password')
+    .type(userPassword);
+  cy.findByType('submit')
+    .click();
+});
 
-  cy.findByType('email').type(userEmail);
-  cy.findByType('password').type(userPassword);
-  cy.findByType('submit').click();
-
+it('Create an article', () => {
+  // Article create //
   cy.contains('New Article')
    .click();
 
@@ -23,9 +29,12 @@ it('should log in and create a new article', () => {
   cy.findeByPlaceholder('Enter tags')
    .type(articleTags);
 
-  cy.contains('Publish Article').click();
-  cy.contains('Publish Article').click();
+  cy.contains('Publish Article')
+    .click();
+  cy.contains('Publish Article')
+    .click();
 
+    // Article check //
   cy.assertPagesURL('/article/');
   
   cy.contains(articleTitle);
