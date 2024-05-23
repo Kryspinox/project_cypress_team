@@ -1,11 +1,14 @@
+import './commands';
+import { generateUser } from "./generate";
+
 describe('Negative sign in', () => {
     before(() => {
       cy.visit('/login');
+      beforeEach(() => {
+        cy.task('generateNewUser').then((generateNewUser) => {
+          user = generateNewUser;
+        });
     });
-  
-    it('should not allow to login a user', () => {
-    });
-});
 
 it('should not log in with non registered email', () => {
 
@@ -25,4 +28,6 @@ it('should not log in with non registered email', () => {
 
   it('should log in with empty fields', () => {
  
-  });
+  });  
+});
+});
