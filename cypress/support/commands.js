@@ -50,3 +50,18 @@ Cypress.Commands.add('fillUserForm', (user) => {
   cy.findByPlaceholder('email').type(user.randomEmail);
   cy.findByPlaceholder('password').type(user.password);
 });
+
+
+Cypress.Commands.add('login', () => {
+    
+  const user = generateUser();
+ 
+ cy.request('POST', 'https://conduit.mate.academy/api/users/login', {
+ "user": {
+ "username": user.randomUsername,
+ "email": user.randomEmail,
+ "password": user.password
+ }
+ });
+ return cy.wrap(user);
+ });

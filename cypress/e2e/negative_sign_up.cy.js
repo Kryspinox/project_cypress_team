@@ -30,7 +30,7 @@ it('should not register with an empty password field', () => {
     cy.findByPlaceholder('email').type(user.invalidEmail);
     cy.findByPlaceholder('password').type(user.password);
 
-    //
+    cy.url().should('eq', `${Cypress.config('baseUrl')}user/register`);
   });
 
   it('should not register with taken email', () => {
