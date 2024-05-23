@@ -1,6 +1,6 @@
 describe('Negative sign in', () => {
     before(() => {
-      cy.visit('/');
+      cy.visit('/login');
     });
   
     it('should not allow to login a user', () => {

@@ -44,3 +44,9 @@ cy.request('POST', 'https://conduit.mate.academy/api/users', {
 });
 return cy.wrap(user);
 });
+
+Cypress.Commands.add('fillUserForm', (user) => {
+  cy.findByPlaceholder('username').type(user.randomUsername);
+  cy.findByPlaceholder('email').type(user.randomEmail);
+  cy.findByPlaceholder('password').type(user.password);
+});
