@@ -15,6 +15,8 @@ describe('Positive sign up', () => {
     cy.findByPlaceholder('username').type(user.randomUsername);
     cy.findByPlaceholder('email').type(user.randomEmail);
     cy.findByPlaceholder('password').type(user.password);
+
+    cy.contains(user.username).should('be.visible');
     });
     });
 });

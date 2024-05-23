@@ -18,7 +18,7 @@ describe('Positive sign in', () => {
     cy.findByPlaceholer('Email').type(randomEmail);
     cy.findByPlaceholer('Email').type(password);
 
-    //
+   cy.contains(user.username).should('be.visible');
     })
 
     });
