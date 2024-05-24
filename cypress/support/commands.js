@@ -31,18 +31,24 @@ Cypress.Commands.add('findByPlaceholder', (placeholder) => {
     cy.get(`[placeholder="${placeholder}"]`)
   });
   
-Cypress.Commands.add('registerNewUser', () => {
-    
- const user = generateUser();
+  Cypress.Commands.add('registerNewUser', () => {
+    const user = generateUser();
 
-cy.request('POST', 'https://conduit.mate.academy/api/users', {
-"user": {
-"username": user.randomUsername,
-"email": user.randomEmail,
-"password": user.password
-}
-});
-return cy.wrap(user);
+    return cy.request({
+        method: 'POST',
+        url: 'https://conduit.mate.academy/api/users',
+        body: {
+            "user": {
+                "username": user.randomUsername,
+                "email": user.randomEmail.toLocaleLowerCase(),
+                "password": user.password
+            }
+        }
+    }).then((response) => {
+        expect(response.status).to.eq(200); 
+        expect(response.body.user).to.have.property('email', user.randomEmail.toLowerCase());
+        return user;
+    });
 });
 
 Cypress.Commands.add('fillUserForm', (user) => {

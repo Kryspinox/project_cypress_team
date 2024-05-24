@@ -4,7 +4,7 @@ import { generateUser } from "../support/generate";
 describe('Positive sign in', () => {
     before(() => {
 
-      cy.visit('/login');
+      cy.visit('/user/login');
 
       let user;
     });
@@ -13,12 +13,14 @@ describe('Positive sign in', () => {
 
     const user = generateUser();
 
-    cy.registerNewUser.then(user =>{
+    cy.registerNewUser().then(registeredUser => {
+      cy.visit('/user/login');
 
-      cy.findByPlaceholder('Email').type(user.randomEmail);
-      cy.findByPlaceholder('Password').type(user.password);
+      cy.findByPlaceholder('Email').type(registeredUser.randomEmail.toLowerCase());
+      cy.findByPlaceholder('Password').type(registeredUser.password);
+      cy.submitButton("Sign in");
 
-   cy.contains(user.username).should('be.visible');
+      cy.contains(registeredUser.randomUsername.toLowerCase()).should('be.visible');
     })
 
     });
