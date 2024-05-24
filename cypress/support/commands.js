@@ -59,22 +59,3 @@ Cypress.Commands.add('fillUserForm', (user) => {
 });
 
 
-Cypress.Commands.add('login', () => {
-    
-  const user = generateUser();
- 
- cy.request('POST', 'https://conduit.mate.academy/api/users/login', {
- "user": {
- "username": user.randomUsername,
- "email": user.randomEmail,
- "password": user.password
- }
- });
- return cy.wrap(user);
- });
-
- Cypress.Commands.add('submitButton', (text) =>{
-  cy.contains('[type = "submit"]', text).click();
- })
-
- 
