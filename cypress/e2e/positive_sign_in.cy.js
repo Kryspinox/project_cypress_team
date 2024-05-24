@@ -1,5 +1,5 @@
-import './commands';
-import { generateUser } from "./generate";
+import '../support/commands';
+import { generateUser } from "../support/generate";
 
 describe('Positive sign in', () => {
     before(() => {
@@ -11,12 +11,12 @@ describe('Positive sign in', () => {
   
     it('should allow to successfully login registered user', () => {
 
-    const user = generateUser;
+    const user = generateUser();
 
     cy.registerNewUser.then(user =>{
 
-    cy.findByPlaceholer('Email').type(user.randomEmail);
-    cy.findByPlaceholer('Password').type(user.password);
+      cy.findByPlaceholder('Email').type(user.randomEmail);
+      cy.findByPlaceholder('Password').type(user.password);
 
    cy.contains(user.username).should('be.visible');
     })

@@ -1,5 +1,5 @@
-import './commands';
-import { generateUser } from "./generate";
+import '../support/commands';
+import { generateUser } from "../support/generate";
 
 describe('Negative sign in', () => {
 
