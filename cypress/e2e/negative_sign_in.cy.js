@@ -6,20 +6,18 @@ describe('Negative sign in', () => {
   let user; 
 
   beforeEach(() => {
-    cy.visit('/login');
-    cy.task('generateUser').then((generatedUser) => {
-      user = generatedUser;
-    });
+    cy.visit('/user/login');
+    user = generateUser();
   });
 
   it('should not log in with non-registered email', () => {
-    cy.registerNewUser().then(() => {
-      cy.findByPlaceholder('Email').type(user.randomEmail);
-      cy.findByPlaceholder('Password').type(user.password);
-      cy.get('button[type="submit"]').click();
+    cy.findByPlaceholder('Email').type(user.randomEmail);
+    cy.findByPlaceholder('Password').type(user.password);
+    cy.get('button[type="submit"]').click();
 
-      cy.contains("email or password is invalid").should("be.visible");
-    });
+    cy.get('.error-messages')
+    .should('contain', "email or password")
+    .and('contain', "is invalid");
   });
 
   it('should not log in with wrong password', () => {
@@ -28,34 +26,36 @@ describe('Negative sign in', () => {
       cy.findByPlaceholder('Password').type('wrongPassword');
       cy.get('button[type="submit"]').click();
 
-      cy.contains("email or password is invalid").should("be.visible");
+      cy.get('.error-messages')
+      .should('contain', "email or password")
+      .and('contain', "is invalid");
     });
   });
 
   it('should not log in with empty email field', () => {
-    cy.registerNewUser().then(() => {
-      cy.findByPlaceholder('Password').type(user.password);
-      cy.get('button[type="submit"]').click();
+    cy.findByPlaceholder('Password').type(user.password);
+    cy.get('button[type="submit"]').click();
 
-      cy.contains("email can't be blank").should("be.visible");
-    });
+    cy.get('.error-messages')
+    .should('contain', "email")
+    .and('contain', "can't be blank");
   });
 
   it('should not log in with empty password field', () => {
-    cy.registerNewUser().then(() => {
-      cy.findByPlaceholder('Email').type(user.randomEmail);
-      cy.get('button[type="submit"]').click();
+    cy.findByPlaceholder('Email').type(user.randomEmail);
+    cy.get('button[type="submit"]').click();
 
-      cy.contains("password can't be blank").should("be.visible");
-    });
+    cy.get('.error-messages')
+    .should('contain', "password")
+    .and('contain', "can't be blank");
   });
 
   it('should not log in with empty fields', () => {
-    cy.registerNewUser().then(() => {
-      cy.get('button[type="submit"]').click();
+    cy.get('button[type="submit"]').click();
 
-      cy.contains("email can't be blank").should("be.visible");
-    });
+    cy.get('.error-messages')
+    .should('contain', "email")
+    .and('contain', "can't be blank");
   });
 
 });
