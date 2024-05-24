@@ -34,11 +34,12 @@ it('should not register with an empty password field', () => {
   });
 
   it('should not register with taken email', () => {
-   cy.registerNewUser().then(user => {
-
-    cy.findByPlaceholder('username').type(user.randomUsername);
-    cy.findByPlaceholder('email').type(user.randomEmail);
-    cy.findByPlaceholder('password').type(user.password);
+    cy.registerNewUser().then(registeredUser => {
+      cy.findByPlaceholder('Username').type(registeredUser.randomUsername);
+      cy.findByPlaceholder('Email').type(registeredUser.randomEmail);
+      cy.findByPlaceholder('Password').type(registeredUser.password);
+      cy.get('button[type="submit"]').click();
+    
 
     cy.contains("This email is taken.").should('be.visible');
    });

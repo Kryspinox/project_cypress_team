@@ -27,7 +27,7 @@
 import { faker } from "@faker-js/faker";
 import { generateUser } from "./generate";
 
-Cypress.Commands.add('findeByPlaceholder', (placeholder) => {
+Cypress.Commands.add('findByPlaceholder', (placeholder) => {
     cy.get(`[placeholder="${placeholder}"]`)
   });
   
@@ -49,6 +49,7 @@ Cypress.Commands.add('fillUserForm', (user) => {
   cy.findByPlaceholder('username').type(user.randomUsername);
   cy.findByPlaceholder('email').type(user.randomEmail);
   cy.findByPlaceholder('password').type(user.password);
+  cy.get('button[type="submit"]').click();
 });
 
 
@@ -69,3 +70,5 @@ Cypress.Commands.add('login', () => {
  Cypress.Commands.add('submitButton', (text) =>{
   cy.contains('[type = "submit"]', text).click();
  })
+
+ 

@@ -2,21 +2,19 @@ import '../support/commands';
 import { generateUser } from "../support/generate";
 
 describe('Positive sign up', () => {
+    let user;
+
     before(() => {
-      cy.visit('/register');
-      let user;
+        cy.visit('user/register');
+        user = generateUser(); 
     });
   
     it('should allow to register a new user', () => {
-      const user = generateUser;
+        cy.findByPlaceholder('Username').type(user.randomUsername);
+        cy.findByPlaceholder('Email').type(user.randomEmail);
+        cy.findByPlaceholder('Password').type(user.password);
+        cy.get('button[type="submit"]').click();
 
-    cy.registerNewUser().then(user => {
-    
-    cy.findByPlaceholder('username').type(user.randomUsername);
-    cy.findByPlaceholder('email').type(user.randomEmail);
-    cy.findByPlaceholder('password').type(user.password);
-
-    cy.contains(user.username).should('be.visible');
-    });
+        cy.contains(user.randomUsername.toLowerCase()).should('be.visible');
     });
 });
