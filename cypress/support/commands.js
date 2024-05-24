@@ -65,3 +65,7 @@ Cypress.Commands.add('login', () => {
  });
  return cy.wrap(user);
  });
+
+ Cypress.Commands.add('submitButton', (text) =>{
+  cy.contains('[type = "submit"]', text).click();
+ })
