@@ -18,7 +18,7 @@ describe('Positive sign in', () => {
 
       cy.findByPlaceholder('Email').type(registeredUser.randomEmail.toLowerCase());
       cy.findByPlaceholder('Password').type(registeredUser.password);
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains(registeredUser.randomUsername.toLowerCase()).should('be.visible');
     })

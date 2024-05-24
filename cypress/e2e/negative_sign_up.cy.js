@@ -8,27 +8,30 @@ describe('Negative sign up', () => {
 
     beforeEach(() => {
 
-      cy.visit('/register');
+      cy.visit('/user/register');
 
-      const user = generateUser;
+      user = generateUser();
 
       cy.registerNewUser();
     });
 
 it('should not register with an empty password field', () => {
 
-  cy.findByPlaceholder('username').type(user.randomUsername);
-  cy.findByPlaceholder('email').type(user.randomEmail);
+  cy.findByPlaceholder('Username').type(user.randomUsername);
+  cy.findByPlaceholder('Email').type(user.randomEmail);
+  cy.get('button[type="submit"]').click();
 
-  cy.contains("Password can't be blank").should('be.visible');
+  cy.get('.error-messages')
+  .should('contain', "password")
+  .and('contain', "can't be blank");
   });
 
   it('should not register with invalid email', () => {
 
 
-    cy.findByPlaceholder('username').type(user.randomUsername);
-    cy.findByPlaceholder('email').type(user.invalidEmail);
-    cy.findByPlaceholder('password').type(user.password);
+    cy.findByPlaceholder('Username').type(user.randomUsername);
+    cy.findByPlaceholder('Email').type(user.invalidEmail);
+    cy.findByPlaceholder('Password').type(user.password);
 
     cy.url().should('eq', `${Cypress.config('baseUrl')}user/register`);
   });
@@ -41,32 +44,38 @@ it('should not register with an empty password field', () => {
       cy.get('button[type="submit"]').click();
     
 
-    cy.contains("This email is taken.").should('be.visible');
+      cy.get('.error-messages')
+      .should('contain', "email")
+      .and('contain', "This email is taken");
    });
   });
 
   it('should not register with short password', () => {
 
-    cy.findByPlaceholder('username').type(user.randomUsername);
-    cy.findByPlaceholder('email').type(user.randomEmail);
-    cy.findByPlaceholder('password').type(user.shortPassword);
+    cy.findByPlaceholder('Username').type(user.randomUsername);
+    cy.findByPlaceholder('Email').type(user.randomEmail);
+    cy.findByPlaceholder('Password').type(user.shortPassword);
+    cy.get('button[type="submit"]').click();
 
   // BUG
   });
 
     it('should not register with an empty username field', () => {
 
-      cy.findByPlaceholder('email').type(user.email);
-      cy.findByPlaceholder('password').type(user.password);
+      cy.findByPlaceholder('Email').type(user.randomEmail);
+      cy.findByPlaceholder('Password').type(user.password);
+      cy.get('button[type="submit"]').click();
 
-      cy.contains("Username must start with a letter, have no spaces, and be 3 - 40 characters.")
+      cy.contains("Username").should('be.visible');
+      cy.contains("must start with a letter, have no spaces, and be 3 - 40 characters.")
       .should('be.visible');
       });
     
       it('should not register with an empty email field', () => {
     
-        cy.findByPlaceholder('username').type(user.randomUsername);
-        cy.findByPlaceholder('password').type(user.password);
+        cy.findByPlaceholder('Username').type(user.randomUsername);
+        cy.findByPlaceholder('Password').type(user.password);
+        cy.get('button[type="submit"]').click();
 
         cy.contains("This email does not seem valid.").should('be.visible');
       });

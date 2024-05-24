@@ -16,7 +16,7 @@ describe('Negative sign in', () => {
     cy.registerNewUser().then(() => {
       cy.findByPlaceholder('Email').type(user.randomEmail);
       cy.findByPlaceholder('Password').type(user.password);
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains("email or password is invalid").should("be.visible");
     });
@@ -26,7 +26,7 @@ describe('Negative sign in', () => {
     cy.registerNewUser().then((registeredUser) => {
       cy.findByPlaceholder('Email').type(registeredUser.randomEmail);
       cy.findByPlaceholder('Password').type('wrongPassword');
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains("email or password is invalid").should("be.visible");
     });
@@ -35,7 +35,7 @@ describe('Negative sign in', () => {
   it('should not log in with empty email field', () => {
     cy.registerNewUser().then(() => {
       cy.findByPlaceholder('Password').type(user.password);
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains("email can't be blank").should("be.visible");
     });
@@ -44,7 +44,7 @@ describe('Negative sign in', () => {
   it('should not log in with empty password field', () => {
     cy.registerNewUser().then(() => {
       cy.findByPlaceholder('Email').type(user.randomEmail);
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains("password can't be blank").should("be.visible");
     });
@@ -52,7 +52,7 @@ describe('Negative sign in', () => {
 
   it('should not log in with empty fields', () => {
     cy.registerNewUser().then(() => {
-      cy.submitButton("Sign in");
+      cy.get('button[type="submit"]').click();
 
       cy.contains("email can't be blank").should("be.visible");
     });
