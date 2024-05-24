@@ -16,7 +16,7 @@ describe('Positive sign in', () => {
     cy.registerNewUser.then(user =>{
 
     cy.findByPlaceholer('Email').type(user.randomEmail);
-    cy.findByPlaceholer('Email').type(user.password);
+    cy.findByPlaceholer('Password').type(user.password);
 
    cy.contains(user.username).should('be.visible');
     })

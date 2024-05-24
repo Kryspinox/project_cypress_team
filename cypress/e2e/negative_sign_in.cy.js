@@ -2,11 +2,16 @@ import './commands';
 import { generateUser } from "./generate";
 
 describe('Negative sign in', () => {
-    before(() => {
+
+  let user; 
+
+    beforeEach(() => {
       cy.visit('/login');
       beforeEach(() => {
-        cy.task('generateNewUser').then((generateNewUser) => {
-          user = generateNewUser;
+        cy.task('generateUser').then((generateUser) => {
+
+          user = generateUser;
+          
         });
     });
 
