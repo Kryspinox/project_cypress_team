@@ -1,41 +1,57 @@
 /// <reference types='cypress' />
 
-const { UserInfo } = require('../support/userInfo.cy.js');
-
-const {userPassword, userEmail, articleBody, articleDescription, articleTitle, articleTags} = UserInfo();
+import{ UserInfo } from '../support/userInfo.cy.js';
 
 before (() => {
 
-  cy.visit('https://conduit.mate.academy/user/login');
+  cy.visit(`${UserInfo.baseUrl}/user/login`);
     //  Log in //
   cy.findByType('email')
-    .type(userEmail);
+    .type(UserInfo.userEmail);
   cy.findByType('password')
-    .type(userPassword);
+    .type(UserInfo.userPassword);
   cy.findByType('submit')
     .click();
+  cy.contains(UserInfo.userName)
+    .should('exist')
+    .and('have.class', 'nav-link');
+  
+    cy.assertPagesURL (`${UserInfo.baseUrl}`);
+
     // Article create //
-  cy.contains('New Article')
-   .click();
-
-  cy.findeByPlaceholder('Article Title')
-   .type(articleTitle);
-  cy.findeByPlaceholder('What\'s this article about?')
-   .type(articleDescription);
-  cy.findeByPlaceholder('Write your article (in markdown)')
-   .type(articleBody);
-  cy.findeByPlaceholder('Enter tags')
-   .type(articleTags);
-
-  cy.contains('Publish Article')
-    .click();
-  cy.contains('Publish Article')
-    .click();
+    cy.contains('New Article')
+      .click()
+      .and('have.class', 'active nav-link');
+  
+    cy.assertPagesURL(`/editor`);
+  
+    cy.findeByPlaceholder('Article Title')
+     .type(UserInfo.articleTitle);
+    cy.findeByPlaceholder('What\'s this article about?')
+     .type(UserInfo.articleDescription);
+    cy.findeByPlaceholder('Write your article (in markdown)')
+     .type(UserInfo.articleBody);
+    cy.findeByPlaceholder('Enter tags')
+     .type(UserInfo.articleTags);
+  
+    cy.findByType('button')
+     .contains('Publish Article')
+     .click();
+    cy.findByType('button')
+      .contains('Publish Article')
+      .click();
 });
 
 it('Delete an article', () => {
+
+  cy.assertPagesURL(`/article/`)
+
   cy.contains('Delete Article')
     .click();
-  cy.assertPagesURL('/article/');
-  cy.contains('No articles are here... yet.')
+
+  cy.assertPagesURL(`${UserInfo.baseUrl}`);
+
+  cy.findByClass('article-preview')
+    .contains('No articles are here... yet.')
+    .should('exist');
 });

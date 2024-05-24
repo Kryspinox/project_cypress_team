@@ -1,43 +1,56 @@
 /// <reference types='cypress' />
 
-const { UserInfo } = require('../support/userInfo.cy.js');
-
-const {userPassword, userEmail, articleBody, articleDescription, articleTitle, articleTags} = UserInfo();
+import{ UserInfo } from '../support/userInfo.cy.js';
 
 before(() => {
-  cy.visit('https://conduit.mate.academy/user/login');
+  
+  cy.visit(`${UserInfo.baseUrl}/user/login`);
     //  Log in //
   cy.findByType('email')
-    .type(userEmail);
+    .type(UserInfo.userEmail);
   cy.findByType('password')
-    .type(userPassword);
+    .type(UserInfo.userPassword);
   cy.findByType('submit')
     .click();
+  cy.contains(UserInfo.userName)
+    .should('exist')
+    .and('have.class', 'nav-link');
 });
 
 it('Create an article', () => {
+
+  cy.assertPagesURL (`${UserInfo.baseUrl}`);
+
   // Article create //
   cy.contains('New Article')
-   .click();
+    .click()
+    .and('have.class', 'active nav-link');
+
+  cy.assertPagesURL(`/editor`);
 
   cy.findeByPlaceholder('Article Title')
-   .type(articleTitle);
+   .type(UserInfo.articleTitle);
   cy.findeByPlaceholder('What\'s this article about?')
-   .type(articleDescription);
+   .type(UserInfo.articleDescription);
   cy.findeByPlaceholder('Write your article (in markdown)')
-   .type(articleBody);
+   .type(UserInfo.articleBody);
   cy.findeByPlaceholder('Enter tags')
-   .type(articleTags);
+   .type(UserInfo.articleTags);
 
-  cy.contains('Publish Article')
+  cy.findByType('button')
+    .contains('Publish Article')
     .click();
-  cy.contains('Publish Article')
+  cy.findByType('button')
+    .contains('Publish Article')
     .click();
 
     // Article check //
   cy.assertPagesURL('/article/');
   
-  cy.contains(articleTitle);
-  cy.contains(articleDescription);
-  cy.contains(articleBody);
+  cy.findByClass('banner')
+    .contains(UserInfo.articleTitle);
+  cy.findByClass('col-md-12')
+    .contains(UserInfo.articleBody);
+  cy.findByClass('tag-list')
+    .contains(UserInfo.articleTags);
 });
