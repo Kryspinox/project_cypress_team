@@ -57,6 +57,8 @@ it('should not register with an empty password field', () => {
     cy.findByPlaceholder('Password').type(user.shortPassword);
     cy.get('button[type="submit"]').click();
 
+    cy.url().should('eq', `${Cypress.config('baseUrl')}user/register`);
+
   // BUG
   });
 
